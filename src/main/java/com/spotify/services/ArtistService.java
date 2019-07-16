@@ -3,30 +3,47 @@ package com.spotify.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spotify.dtos.ArtistDto;
+import com.spotify.entities.ArtistEntity;
+import com.spotify.repositories.ArtistRepository;
 
 @Service
 public class ArtistService {
 
+	@Autowired
+	private ArtistRepository artistRepository;
 	
 	public void saveArtist(ArtistDto artistDto) {
-		System.out.println(artistDto.toString());
+		ArtistEntity artistEntity = new ArtistEntity();
+		artistEntity.setName(artistDto.getName());
+		artistEntity.setGenre(artistDto.getGenre());
+		artistEntity.setEmail(artistDto.getEmail());
+		artistEntity.setCountry(artistDto.getCountry());
+			
+		artistRepository.save(artistEntity);
+		
+		
+		
 	}
 	
 	public List<ArtistDto> getAllArtists(){
-		List<ArtistDto> allArtists = new ArrayList<ArtistDto>();
+		List<ArtistEntity> artistEntities = artistRepository.getAllArtist();
 		
-		ArtistDto dumm1 = new ArtistDto();
-		dumm1.setName("Taylor Swift");
-		dumm1.setGenre("pop");
-		dumm1.setCountry("sdrr");
-		dumm1.setEmail("xtz@gmail.com");
+		List<ArtistDto> artistDtos = new ArrayList<ArtistDto>();
+		for(ArtistEntity artist : artistEntities) {
+			ArtistDto artistDto = new ArtistDto();
+			artistDto.setName(artist.getName());
+			artistDto.setGenre(artist.getGenre());
+			artistDto.setCountry(artist.getCountry());
+			artistDto.setEmail(artist.getEmail());
+			
+			artistDtos.add(artistDto);
+		}
 		
-		allArtists.add(dumm1);
-		
-		return allArtists;
+		return artistDtos;
 	}
 	
 	public ArtistDto getAllArtistById(int id){

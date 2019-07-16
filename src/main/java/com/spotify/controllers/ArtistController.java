@@ -21,7 +21,7 @@ public class ArtistController {
 	private ArtistService artistService;
 	
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public void hello(@RequestBody ArtistDto artistDto) {
+	public void saveArtist(@RequestBody ArtistDto artistDto) {
 		artistService.saveArtist(artistDto);
 	}
 	
