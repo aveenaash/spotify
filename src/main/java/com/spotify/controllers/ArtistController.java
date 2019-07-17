@@ -41,4 +41,6 @@ public class ArtistController {
 	public ArtistDto getArtistDetailsById(@PathVariable int id) {
 		return artistService.getAllArtistById(id);
 	}
+
+	
 }

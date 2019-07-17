@@ -12,18 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spotify.entities.ArtistEntity;
 
 @Repository
-public class ArtistRepository {
-	
-	private EntityManager em;
-
-	public EntityManager getEm() {
-		return em;
-	}
-
-	@PersistenceContext
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
+public class ArtistRepository extends AbstractRepository {
 	
 	@Transactional
 	public void save(ArtistEntity artistEntity) {
@@ -35,8 +24,12 @@ public class ArtistRepository {
 		Query query = em.createQuery("SELECT a from ArtistEntity a");
 		List<ArtistEntity> artists = query.getResultList();
 		return artists;
+		
 	}
 	
-	
+	@Transactional
+	public ArtistEntity getArtistById(long id){
+		return (ArtistEntity) em.find(ArtistEntity.class, id);
+	}
 
 }
